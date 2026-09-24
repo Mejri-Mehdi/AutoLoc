@@ -1,2 +1,2 @@
 # AutoLoc
-Spring Boot + Maven System Iinformation SI
+Spring Boot + Maven System information SI
