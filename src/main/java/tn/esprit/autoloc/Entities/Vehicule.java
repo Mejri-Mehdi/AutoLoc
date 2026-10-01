@@ -1,27 +1,36 @@
 package tn.esprit.autoloc.Entities;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Vehicule implements Serializable {
 
-public class Vehicule {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long idvehicule;
-    String immatriculation;
-    String marque;
-    String modele;
+    private Long idVehicule;
+
+    private String immatriculation;
+
+    private String marque;
+
+    private String modele;
+
     @Enumerated(EnumType.STRING)
-    CategorieVehicule categories ;
-    BigDecimal tarifjournaliere;
-    StatutVehicule statut;
+    private CategorieVehicule categorie;
+
+    private BigDecimal tarifJournalier;
+
+    @Enumerated(EnumType.STRING)
+    private StatutVehicule statut;
 }
