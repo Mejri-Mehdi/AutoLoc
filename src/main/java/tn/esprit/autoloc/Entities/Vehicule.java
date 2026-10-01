@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,4 +34,24 @@ public class Vehicule implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private StatutVehicule statut;
+
+    @ManyToOne
+    private Agence agence;
+
+    @ManyToMany
+    @JoinTable(
+        name = "vehicule_equipement",
+        joinColumns = @JoinColumn(name = "id_vehicule"),
+        inverseJoinColumns = @JoinColumn(name = "id_equipement")
+    )
+    @ToString.Exclude
+    private List<Equipement> equipements;
+
+    @OneToMany(mappedBy = "vehicule")
+    @ToString.Exclude
+    private List<Maintenance> maintenances;
+
+    @OneToMany(mappedBy = "vehicule")
+    @ToString.Exclude
+    private List<Reservation> reservations;
 }

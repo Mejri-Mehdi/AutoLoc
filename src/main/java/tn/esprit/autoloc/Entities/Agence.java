@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,4 +27,12 @@ public class Agence implements Serializable {
     private String adresse;
 
     private String telephone;
+
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Vehicule> vehicules;
+
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private List<Employe> employes;
 }

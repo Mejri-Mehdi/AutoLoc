@@ -25,4 +25,7 @@ public class Maintenance implements Serializable {
     private LocalDate dateFin;
 
     private String description;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Vehicule vehicule;
 }
