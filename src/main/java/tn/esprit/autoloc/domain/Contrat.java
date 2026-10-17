@@ -1,5 +1,7 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,9 +43,11 @@ public class Contrat implements Serializable {
 
     @OneToOne(mappedBy = "contrat")
     @ToString.Exclude
+    @JsonIgnore
     private Reservation reservation;
 
     @OneToMany(mappedBy = "contrat", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    private List<Paiement> paiements;
+    @JsonManagedReference("contrat-paiements")
+    private List<Paiement> paiements = new ArrayList<>();
 }

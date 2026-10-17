@@ -1,5 +1,6 @@
 package tn.esprit.autoloc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -39,9 +40,11 @@ public class Agence implements Serializable {
 
     @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @JsonIgnore
     private List<Vehicule> vehicules;
 
     @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @ToString.Exclude
+    @JsonIgnore
     private List<Employe> employes;
 }
