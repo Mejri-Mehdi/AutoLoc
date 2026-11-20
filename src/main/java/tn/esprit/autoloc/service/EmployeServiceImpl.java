@@ -3,8 +3,11 @@ package tn.esprit.autoloc.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import tn.esprit.autoloc.domain.Agence;
 import tn.esprit.autoloc.domain.Employe;
 import tn.esprit.autoloc.exception.ResourceNotFoundException;
+import tn.esprit.autoloc.repository.IAgenceRepository;
 import tn.esprit.autoloc.repository.IEmployeRepository;
 
 @Service
@@ -12,6 +15,7 @@ import tn.esprit.autoloc.repository.IEmployeRepository;
 public class EmployeServiceImpl implements IEmployeService {
 
     private final IEmployeRepository employeRepository;
+    private final IAgenceRepository agenceRepository;
 
     @Override
     public Employe create(Employe employe) {
@@ -50,6 +54,24 @@ public class EmployeServiceImpl implements IEmployeService {
             throw new ResourceNotFoundException("Employe", id);
         }
         employeRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Employe desaffecterEmploye(Long idEmploye) {
+        Employe employe = findById(idEmploye);
+        employe.setAgence(null);
+        return employeRepository.save(employe);
+    }
+
+    @Transactional
+    @Override
+    public Employe affecterEmploye(Long idEmploye, Long idAgence) {
+        Employe employe = findById(idEmploye);
+        Agence agence = agenceRepository.findById(idAgence)
+                .orElseThrow(() -> new ResourceNotFoundException("Agence", idAgence));
+        employe.setAgence(agence);
+        return employeRepository.save(employe);
     }
 
     private void validerEmploye(Employe employe) {
